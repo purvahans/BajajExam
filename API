@@ -1,0 +1,48 @@
+
+const express = require("express");
+const bodyParser = require("body-parser");
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(bodyParser.json());
+
+
+app.post("/processArray", (req, res) => {
+  const { data } = req.body;
+
+ 
+  const user_id = "john_doe_17091999";
+  const email = "john@xyz.com";
+  const roll_number = "ABCD123";
+
+  
+  const evenNumbers = data.filter(num => num % 2 === 0);
+
+
+  const oddNumbers = data.filter(num => num % 2 !== 0);
+
+
+  const alphabets = data.filter(
+    char => typeof char === "string" && /^[a-zA-Z]*$/.test(char)
+  ).map(char => char.toUpperCase());
+
+ 
+  const responseObject = {
+    is_success: true,
+    user_id: user_id,
+    email: email,
+    roll_number: roll_number,
+    odd_numbers: oddNumbers,
+    even_numbers: evenNumbers,
+    alphabets: alphabets
+  };
+
+  
+  res.json(responseObject);
+});
+
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
